@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real Numbers</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .language-toggle {
+      margin-bottom: 20px;
+    }
+    .question {
+      color: red;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px 0 5px;
+    }
+    .answer {
+      color: blue;
+      font-weight: bold;
+      display: none;
+      margin-left: 20px;
+      padding: 10px;
+      border-left: 2px solid #ccc;
+      background-color: #f0f8ff;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Real Numbers</h1>
+
+  <div class="language-toggle">
+    <button onclick="switchLanguage('en')">English</button>
+    <button onclick="switchLanguage('te')">తెలుగు</button>
+  </div>
+
+  <div id="questions-container"></div>
+
+  <script>
+    const questions = {
+      en: [
+        { q: "6. Find the value of log₅ 125.", a: "log₅ 125 = x ⇒ 5ˣ = 125 = 5³ ⇒ x = 3 ⇒ log₅ 125 = 3" },
+        { q: "7. Find the value of log₂ 64.", a: "log₂ 64 = x ⇒ 2ˣ = 64 ⇒ 2⁶ = 64 ⇒ x = 6" },
+        { q: "8. Is log₂ 64 rational or irrational? Justify.", a: "log₂ 64 = 6, which is a whole number. So, it is a rational number." },
+        { q: "9. Find the HCF of 36 and 48 by using Euclid’s Division Algorithm.", a: "48 = 36×1 + 12 ⇒ 36 = 12×3 + 0 ⇒ HCF = 12" },
+        { q: "10. Find HCF and LCM of 80, 120 by Prime Factorization Method.", a: "80 = 2⁴ × 5, 120 = 2³ × 3 × 5 ⇒ HCF = 2³ × 5 = 40; LCM = 2⁴ × 3 × 5 = 240" },
+        { q: "11. If HCF of 90 and 144 is 18, then find their LCM.", a: "LCM = (90 × 144) / 18 = 720" },
+        { q: "12. Convert to logarithmic form: (i) 3ʸ = 25", a: "log₃ 25 = y" },
+        { q: "12. (ii) 1/49 = 7⁻²", a: "log₇ (1/49) = -2" },
+        { q: "13. Write in exponential form: (i) log₃ 27 = 3", a: "3³ = 27" },
+        { q: "13. Find the value of: (ii) 5 log₂ 32", a: "First, find the value of log₂ 32. \nWe know that 2⁵ = 32, so log₂ 32 = 5. \nNow, substitute this value back into the expression: \n5 log₂ 32 = 5 × 5 = 25." },
+        { q: "14. Expand log(200)", a: "200 = 2³ × 5² ⇒ log(200) = log(2³) + log(5²) = 3 log 2 + 2 log 5" },
+        { q: "14. Expand log(125/64)", a: "log(125/64) = log 125 − log 64 = 3 log 5 − 6 log 2" },
+        { q: "15. Express as single logarithm: 2 log x + 3 log y − 5 log z", a: "log(x²y³ / z⁵)" },
+        { q: "15. (ii) 5 log 3 + 7 log 2 − 3 log 11 − 4 log 5", a: "log(3⁵ × 2⁷ / (11³ × 5⁴))" },
+        { q: "16. Show that 5 + 3√2 is irrational.", a: "Let's assume that 5 + 3√2 is a rational number. Then, we can write it as 5 + 3√2 = a/b, where a and b are integers with b ≠ 0. \nRearranging the equation, we get: 3√2 = (a/b) - 5 ⇒ 3√2 = (a - 5b)/b ⇒ √2 = (a - 5b)/(3b). \nSince a and b are integers, (a - 5b)/(3b) is a rational number. This implies that √2 is a rational number. \nBut this contradicts the fact that √2 is an irrational number. \nTherefore, our initial assumption is wrong. Hence, 5 + 3√2 is an irrational number." },
+        { q: "17. If x² + y² = 27xy, prove: 2 log(x − y) = 2 log 5 + log x + log y", a: "Given: x² + y² = 27xy. \nSubtract 2xy from both sides: x² + y² - 2xy = 27xy - 2xy. \nThis gives (x - y)² = 25xy. \nNow, apply logarithm on both sides: log((x - y)²) = log(25xy). \nUsing the power rule of logarithms (log aⁿ = n log a), we get: 2 log(x - y) = log(25xy). \nUsing the product rule of logarithms (log(ab) = log a + log b), we get: 2 log(x - y) = log(25) + log(x) + log(y). \nWe can write log(25) as log(5²), which is 2 log 5. \nSo, 2 log(x - y) = 2 log 5 + log x + log y. Hence proved." },
+        { q: "18. Prove square of any positive integer is of form 5m or 5m+1 or 5m+4.", a: "Let 'n' be any positive integer. By Euclid's Division Lemma, n can be written in the form 5q + r, where q is an integer and r = 0, 1, 2, 3, or 4.\nCase 1: n = 5q ⇒ n² = (5q)² = 25q² = 5(5q²) = 5m, where m = 5q².\nCase 2: n = 5q + 1 ⇒ n² = (5q+1)² = 25q² + 10q + 1 = 5(5q² + 2q) + 1 = 5m + 1, where m = 5q² + 2q.\nCase 3: n = 5q + 2 ⇒ n² = (5q+2)² = 25q² + 20q + 4 = 5(5q² + 4q) + 4 = 5m + 4, where m = 5q² + 4q.\nCase 4: n = 5q + 3 ⇒ n² = (5q+3)² = 25q² + 30q + 9 = 5(5q² + 6q + 1) + 4 = 5m + 4, where m = 5q² + 6q + 1.\nCase 5: n = 5q + 4 ⇒ n² = (5q+4)² = 25q² + 40q + 16 = 5(5q² + 8q + 3) + 1 = 5m + 1, where m = 5q² + 8q + 3.\nThus, the square of any positive integer is of the form 5m, 5m + 1, or 5m + 4." },
+        { q: "19. Express 225 as product of prime factors.", a: "To express 225 as a product of its prime factors, we perform prime factorization:\nStart by dividing 225 by the smallest prime number. Since it ends in 5, we can divide by 5.\n225 ÷ 5 = 45\n45 ÷ 5 = 9\nNow, divide 9 by its prime factor, 3.\n9 ÷ 3 = 3\nSo, the prime factors are 5, 5, 3, 3.\nTherefore, 225 = 3 × 3 × 5 × 5 = 3² × 5²." },
+        { q: "20. Show that √2 + √3 is irrational.", a: "Let's assume, by way of contradiction, that √2 + √3 is a rational number.\nSo, we can write √2 + √3 = a/b, where 'a' and 'b' are co-prime integers and b ≠ 0.\nRearrange the equation: √3 = (a/b) - √2.\nNow, square both sides: (√3)² = (a/b - √2)². \n3 = (a²/b²) - 2(a/b)√2 + (√2)². \n3 = a²/b² - (2a/b)√2 + 2. \nIsolate the term with the irrational part: (2a/b)√2 = (a²/b²) + 2 - 3 ⇒ (2a/b)√2 = (a²/b²) - 1.\n(2a/b)√2 = (a² - b²)/b².\n√2 = [(a² - b²)/b²] × [b/(2a)]\n√2 = (a² - b²) / (2ab).\nSince 'a' and 'b' are integers, (a² - b²) / (2ab) is a rational number. \nThis means √2 is a rational number. \nThis is a contradiction, as we know that √2 is irrational. \nTherefore, our initial assumption was wrong. Hence, √2 + √3 is an irrational number." }
+      ],
+      te: [
+        { q: "6. log₅ 125 విలువ కనుగొనండి.", a: "log₅ 125 = x ⇒ 5ˣ = 125 ⇒ 5³ ⇒ కాబట్టి x = 3" },
+        { q: "7. log₂ 64 విలువ కనుగొనండి.", a: "log₂ 64 = x ⇒ 2ˣ = 64 ⇒ 2⁶ = 64 ⇒ కాబట్టి log₂ 64 = 6" },
+        { q: "8. log₂ 64 అకరణీయ సంఖ్యా? కరణీయ సంఖ్యా? వివరించండి.", a: "log₂ 64 = 6. ఇది ఒక పూర్ణ సంఖ్య కాబట్టి, ఇది ఒక అకరణీయ సంఖ్య." },
+        { q: "9. 36 మరియు 48 యొక్క గ.సా.భా. ను యూక్లిడ్ భాగహార న్యాయం ఉపయోగించి కనుగొనండి.", a: "48 = 36×1 + 12 ⇒ 36 = 12×3 + 0 ⇒ గ.సా.భా. = 12" },
+        { q: "10. 80, 120 యొక్క గ.సా.భా. మరియు క.సా.గు. ను ప్రధాన కారణాంకాల పద్ధతిలో కనుగొనండి.", a: "80 = 2⁴ × 5, 120 = 2³ × 3 × 5 ⇒ గ.సా.భా. = 2³ × 5 = 40; క.సా.గు. = 2⁴ × 3 × 5 = 240" },
+        { q: "11. 90 మరియు 144 యొక్క గ.సా.భా. 18 అయితే, వాటి క.సా.గు. కనుగొనండి.", a: "క.సా.గు. = (90 × 144) / 18 = 720" },
+        { q: "12. 3ʸ = 25 ను సంవర్గమాన రూపంలోకి మార్చండి.", a: "log₃ 25 = y" },
+        { q: "12. 1/49 = 7⁻² ను సంవర్గమాన రూపంలోకి మార్చండి.", a: "log₇ (1/49) = -2" },
+        { q: "13. ఘాత రూపంలోకి వ్రాయండి: (i) log₃ 27 = 3", a: "3³ = 27" },
+        { q: "13. విలువ కనుగొనండి: (ii) 5 log₂ 32", a: "ముందుగా, log₂ 32 విలువ కనుగొనాలి. \nమనకు 2⁵ = 32 అని తెలుసు, కాబట్టి log₂ 32 = 5 అవుతుంది. \nఇప్పుడు, ఈ విలువను అసలు సమీకరణంలో ప్రతిక్షేపిస్తే: \n5 log₂ 32 = 5 × 5 = 25." },
+        { q: "14. log(200) ను విస్తరించండి.", a: "200 = 2³ × 5² ⇒ log(200) = 3 log 2 + 2 log 5" },
+        { q: "14. log(125/64) ను విస్తరించండి.", a: "log(125/64) = 3 log 5 − 6 log 2" },
+        { q: "15. 2 log x + 3 log y − 5 log z ను ఏక సంవర్గమానంగా వ్రాయండి.", a: "log(x²y³ / z⁵)" },
+        { q: "15. (ii) 5 log 3 + 7 log 2 − 3 log 11 − 4 log 5", a: "log(3⁵ × 2⁷ / (11³ × 5⁴))" },
+        { q: "16. 5 + 3√2 ఒక కరణీయ సంఖ్య అని చూపండి.", a: "విరుద్ధత ద్వారా నిరూపణ పద్ధతిని వాడుదాం. 5 + 3√2 ఒక అకరణీయ సంఖ్య అనుకుందాం.\nఅప్పుడు, 5 + 3√2 = a/b (ఇక్కడ a, b లు పూర్ణసంఖ్యలు మరియు b ≠ 0).\nదీని నుండి, 3√2 = a/b - 5 ⇒ 3√2 = (a - 5b)/b ⇒ √2 = (a - 5b)/(3b).\na, b లు పూర్ణసంఖ్యలు కావున, (a - 5b)/(3b) ఒక అకరణీయ సంఖ్య అవుతుంది.\nకావున, √2 కూడా ఒక అకరణీయ సంఖ్య కావాలి.\nకానీ, √2 ఒక కరణీయ సంఖ్య అని మనకు తెలుసు. ఇది ఒక విరుద్ధత.\nకాబట్టి మనం మొదట అనుకున్నది తప్పు. అనగా, 5 + 3√2 ఒక కరణీయ సంఖ్య." },
+        { q: "17. x² + y² = 27xy అయితే, 2 log(x − y) = 2 log 5 + log x + log y అని నిరూపించండి.", a: "దత్తాంశం: x² + y² = 27xy.\nఇరువైపుల నుండి 2xy ని తీసివేయగా, x² + y² - 2xy = 27xy - 2xy.\nఅప్పుడు (x - y)² = 25xy.\nఇప్పుడు ఇరువైపులా సంవర్గమానం (logarithm) తీసుకుందాం: log((x - y)²) = log(25xy).\nసంవర్గమాన ఘాత న్యాయం ప్రకారం (log aⁿ = n log a), 2 log(x - y) = log(25xy).\nసంవర్గమాన లబ్ధ న్యాయం ప్రకారం (log(ab) = log a + log b), 2 log(x - y) = log(25) + log(x) + log(y).\nlog(25) ను log(5²) గా వ్రాయవచ్చు, దీని విలువ 2 log 5.\nకావున, 2 log(x - y) = 2 log 5 + log x + log y. నిరూపించబడింది." },
+        { q: "18. ఏదైనా ధన పూర్ణసంఖ్య యొక్క వర్గం 5m, 5m+1 లేదా 5m+4 రూపంలో ఉంటుందని చూపండి.", a: "n ఏదైనా ఒక ధన పూర్ణసంఖ్య అనుకుందాం. యూక్లిడ్ భాగహార న్యాయం ప్రకారం, n ను 5q + r రూపంలో వ్రాయవచ్చు (ఇక్కడ q ఒక పూర్ణసంఖ్య మరియు r = 0, 1, 2, 3, లేదా 4).\nసందర్భం 1: n = 5q ⇒ n² = (5q)² = 25q² = 5(5q²) = 5m (ఇక్కడ m = 5q²).\nసందర్భం 2: n = 5q + 1 ⇒ n² = (5q+1)² = 25q² + 10q + 1 = 5(5q² + 2q) + 1 = 5m + 1 (ఇక్కడ m = 5q² + 2q).\nసందర్భం 3: n = 5q + 2 ⇒ n² = (5q+2)² = 25q² + 20q + 4 = 5(5q² + 4q) + 4 = 5m + 4 (ఇక్కడ m = 5q² + 4q).\nసందర్భం 4: n = 5q + 3 ⇒ n² = (5q+3)² = 25q² + 30q + 9 = 5(5q² + 6q + 1) + 4 = 5m + 4 (ఇక్కడ m = 5q² + 6q + 1).\nసందర్భం 5: n = 5q + 4 ⇒ n² = (5q+4)² = 25q² + 40q + 16 = 5(5q² + 8q + 3) + 1 = 5m + 1 (ఇక్కడ m = 5q² + 8q + 3).\nకావున, ఏదైనా ధన పూర్ణసంఖ్య యొక్క వర్గం 5m, 5m + 1, లేదా 5m + 4 రూపంలో ఉంటుంది." },
+        { q: "19. 225 ను ప్రధాన కారణాంకాల లబ్దంగా వ్రాయండి.", a: "225 ను ప్రధాన కారణాంకాల లబ్దంగా వ్రాయడానికి, మనం ప్రధాన కారణాంక విభజన చేద్దాం:\n225 సంఖ్య 5 తో ముగుస్తుంది కాబట్టి, దానిని 5 తో భాగిద్దాం.\n225 ÷ 5 = 45\n45 ను మళ్ళీ 5 తో భాగిద్దాం.\n45 ÷ 5 = 9\nఇప్పుడు, 9 ను దాని ప్రధాన కారణాంకం 3 తో భాగిద్దాం.\n9 ÷ 3 = 3\nకావున, ప్రధాన కారణాంకాలు 5, 5, 3, 3.\nఅందువల్ల, 225 = 3 × 3 × 5 × 5 = 3² × 5²." },
+        { q: "20. √2 + √3 ఒక కరణీయ సంఖ్య అని చూపండి.", a: "విరుద్ధత ద్వారా నిరూపణ చేద్దాం. √2 + √3 ఒక అకరణీయ సంఖ్య అనుకుందాం.\nఅప్పుడు, √2 + √3 = a/b అని వ్రాయవచ్చు (ఇక్కడ 'a' మరియు 'b' లు పరస్పర ప్రధానాంకాలు, మరియు b ≠ 0).\nసమీకరణాన్ని మార్చి వ్రాయగా: √3 = (a/b) - √2.\nఇప్పుడు ఇరువైపులా వర్గం చేయగా: (√3)² = (a/b - √2)². \n3 = (a²/b²) - 2(a/b)√2 + (√2)². \n3 = a²/b² - (2a/b)√2 + 2. \nకరణీయ పదాన్ని వేరు చేయగా: (2a/b)√2 = (a²/b²) + 2 - 3 ⇒ (2a/b)√2 = (a²/b²) - 1.\n(2a/b)√2 = (a² - b²)/b².\n√2 = [(a² - b²)/b²] × [b/(2a)]\n√2 = (a² - b²) / (2ab).\n'a' మరియు 'b' లు పూర్ణాంకాలు కావున, (a² - b²) / (2ab) ఒక అకరణీయ సంఖ్య అవుతుంది.\nదీని అర్థం √2 ఒక అకరణీయ సంఖ్య.\nకానీ మనకు తెలిసినట్లుగా √2 ఒక కరణీయ సంఖ్య. ఇది ఒక విరుద్ధత.\nకాబట్టి, మనం మొదట చేసిన ఊహ తప్పు. అందువల్ల, √2 + √3 ఒక కరణీయ సంఖ్య." }
+      ]
+    };
+
+    let currentLang = 'en';
+
+    function renderQuestions() {
+      const container = document.getElementById("questions-container");
+      container.innerHTML = "";
+
+      questions[currentLang].forEach((item, index) => {
+        const qElem = document.createElement("div");
+        qElem.className = "question";
+        qElem.innerText = item.q;
+        
+        qElem.onclick = () => {
+          const answerElem = document.getElementById("answer-" + index);
+          answerElem.style.display = answerElem.style.display === "none" ? "block" : "none";
+        };
+
+        const aElem = document.createElement("div");
+        aElem.className = "answer";
+        aElem.id = "answer-" + index;
+        aElem.innerText = item.a;
+
+        container.appendChild(qElem);
+        container.appendChild(aElem);
+      });
+    }
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      document.getElementById("title").innerText = lang === 'en' ? "Real Numbers" : "వాస్తవ సంఖ్యలు";
+      renderQuestions();
+    }
+
+    renderQuestions();
+  </script>
+
+</body>
+</html>
